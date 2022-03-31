@@ -21,7 +21,7 @@ import string #library with alphabet list
 from nltk.corpus import words #library that contains list of all words in english dictionary
 pd.set_option('mode.chained_assignment', None) #hiding warning messages
 
-   #INPUT DATA -- (ONLY PART OF CODE THAT SHOULD BE EDITED)
+   #INPUT DATA -- (ONLY PART OF CODE THAT NEEDS TO BE EDITED EACH ROUND)
 TopN = 10  #The number of word suggestions you want printed
 guess_num = 1 #The guess number you are on
 l1 = "" #First letter if position confirmed (should be green on wordle)
@@ -29,18 +29,17 @@ l2 = "" #Second letter
 l3 = "" #Third letter
 l4 = "" #Fourth letter
 l5 = "" #Fifth letter
-contains = [] #Any letters confirmed to be in word but position not certain (yellow on wordle)
+contains = [""] #Any letters confirmed to be in word but position not certain (yellow on wordle)
 not_contains = [] #any letters confirmed to not be in the word (grey on wordle)
 
 
    #CREATING WORD AND LETTER LISTS
-if guess_num == 1:  #Only done for first guess
-    word_list = [word.lower() for word in list(words.words())] #make all words lowercase
-    word_list = list(filter(lambda word: len(word) == 5, word_list)) #limiting word list to five letter words
-    word_list = list(np.unique(np.array(word_list))) #removing duplicate words
-    word_list = list(str(word) for word in word_list) #changing variable type back to string
-    alphabet = list(string.ascii_lowercase) #importing list of alphabet letters
-    alphabet = list(filter(lambda letter: letter not in [word for word in word_list], alphabet)) #removing letters not in words list
+word_list = [word.lower() for word in list(words.words())] #make all words lowercase
+word_list = list(filter(lambda word: len(word) == 5, word_list)) #limiting word list to five letter words
+word_list = list(np.unique(np.array(word_list))) #removing duplicate words
+word_list = list(str(word) for word in word_list) #changing variable type back to string
+alphabet = list(string.ascii_lowercase) #importing list of alphabet letters
+alphabet = list(filter(lambda letter: letter not in [word for word in word_list], alphabet)) #removing letters not in words list
     
     #LIMITING WORD LIST BASED ON INPUTS
 for i in range(5): #for each letter in 5 letter word
@@ -82,7 +81,3 @@ if len(Best_Guesses) < TopN: #if the number of words existing given the paramete
 print(f"Top {TopN} Guesses:")
 for i in range(TopN): #print the "Top N" best guesses (if "N" is 10, it will print 10 words)
     print(i+1,"\t\t",Best_Guesses["Word"][i]) 
-
-            
-    
-    
