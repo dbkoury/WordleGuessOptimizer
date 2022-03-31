@@ -24,12 +24,21 @@ pd.set_option('mode.chained_assignment', None) #hiding warning messages
    #INPUT DATA -- (ONLY PART OF CODE THAT NEEDS TO BE EDITED EACH ROUND)
 TopN = 10  #The number of word suggestions you want printed
 guess_num = 1 #The guess number you are on
+    #First Letter
 l1 = "" #First letter if position confirmed (should be green on wordle)
-l2 = "" #Second letter 
-l3 = "" #Third letter
-l4 = "" #Fourth letter
-l5 = "" #Fifth letter
-contains = [""] #Any letters confirmed to be in word but position not certain (yellow on wordle)
+y1 = [] #Any letters confirmed to be in word but not this position (yellow on wordle)
+    #Second Letter
+l2 = "" #Second letter - green
+y2 = [] #Second letter - yellow
+    #Third Letter
+l3 = "" #Third letter - green
+y3 = [] #Third letter - yellow
+    #Fourth Letter
+l4 = "" #Fourth letter - green
+y4 = [] #Fourth letter - yellow
+    #Fifth Letter
+l5 = "" #Fifth letter - green
+y5 = [] #Fifth letter - yellow
 not_contains = [] #any letters confirmed to not be in the word (grey on wordle)
 
 
@@ -47,11 +56,13 @@ for i in range(5): #for each letter in 5 letter word
         word_list = list(filter(lambda word: globals()[f"l{i+1}"] in word[i], word_list)) #filter word list to only include words with letter in the "i" position
     elif globals()[f"l{i+1}"] != "": #else if not blank guess
         print(f"Error: Postion {i} letter not valid letter") #error message for invalid input
-for i in contains: #for each letter in the "contains" input
-    if i in alphabet:
-        word_list = list(filter(lambda word: i in word, word_list)) #filtering words list to only include words with this letter
-    elif i != "":
-        print(f"Error: Contains list {i} letter not valid letter") #error message for invalid input
+for j in range(5): #for each letter
+    for i in globals()[f"y{j+1}"]: #for each letter in the "yellow" (y) input
+        if i in alphabet:
+            word_list = list(filter(lambda word: i in word, word_list)) #filtering words list to only include words with this letter
+            word_list = list(filter(lambda word: i not in word[j], word_list)) #filter word list to only include words without this letter in the "j" position
+        elif i != "":
+            print(f"Error: Contains list {i} letter not valid letter") #error message for invalid input
 for i in not_contains: #for each letter in the "not_contains" input
     if i in alphabet:
         word_list = list(filter(lambda word: i not in word, word_list)) #filtering words list to only include words without this letter
